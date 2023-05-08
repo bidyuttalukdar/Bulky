@@ -13,7 +13,7 @@ namespace BulkyWeb.Controllers
         public IActionResult Index()
         {
             List<Category> categoryList = _db.categories.ToList();
-            return View();
+            return View(categoryList);
         }
     }
 }
