@@ -23,6 +23,11 @@ namespace BulkyWeb.Controllers
         [HttpPost]
         public IActionResult Create(Category obj)
         {
+            if(obj.Name == obj.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("Name", "Name can't be same with display order");
+            }
+
             if (ModelState.IsValid)
             {
                 _db.categories.Add(obj);
