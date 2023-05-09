@@ -6,7 +6,7 @@
             <h3> Category </h3>
         </div>
         <div class="col-6 text-end">
-            <a asp-controller="Category" asp-action="create" class="btn btn-primary">Create New Category</a>
+            <a asp-controller="Category" asp-action="create" class="btn btn-primary"> <i class="bi bi-plus-lg"></i> Create New Category</a>
         </div>
     </div>
     <table class="table table-border table-striped">
@@ -15,6 +15,7 @@
                 <td>ID</td>
                 <td>NAME</td>
                 <td>DISPLAY ORDER</td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,12 @@
                     <td>@ob.Id</td>
                     <td>@ob.Name</td>
                     <td>@ob.DisplayOrder</td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asc-asp-controller="Category" asc-action="Edit" asp-route-id="@ob.Id" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
+                            <a asc-asp-controller="Category" asc-action="Delete" class="btn btn-danger mx-2"> <i class="bi bi-trash"></i> Delete</a>
+                        </div>
+                    </td>
                 </tr>
             }
         </tbody>
