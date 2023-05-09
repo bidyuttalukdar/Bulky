@@ -9,8 +9,10 @@ namespace BulkyWeb.Models
         public int Id { get; set; }
         [Required]
         [DisplayName("Category Name")]
+        [MaxLength(30)]
         public String Name { get; set; }
         [DisplayName("Display Order")]
+        [Range(1,100,ErrorMessage = "Value must be in between 1-100")]
         public int DisplayOrder { get; set; }
     }
 }
