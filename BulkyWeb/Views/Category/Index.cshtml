@@ -27,8 +27,8 @@
                     <td>@ob.DisplayOrder</td>
                     <td>
                         <div class="w-75 btn-group" role="group">
-                            <a asc-asp-controller="Category" asc-action="Edit" asp-route-id="@ob.Id" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
-                            <a asc-asp-controller="Category" asc-action="Delete" class="btn btn-danger mx-2"> <i class="bi bi-trash"></i> Delete</a>
+                            <a asp-controller="Category" asp-action="edit" asp-route-id="@ob.Id" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
+                            <a asp-controller="Category" asp-action="delete" class="btn btn-danger mx-2"> <i class="bi bi-trash"></i> Delete</a>
                         </div>
                     </td>
                 </tr>

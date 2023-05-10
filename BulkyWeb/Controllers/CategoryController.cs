@@ -46,31 +46,60 @@ namespace BulkyWeb.Controllers
                 return NotFound();
             }
             Category? categoryFromDB = _db.categories.Find(id);
-            Category? categoryFromDB1 = _db.categories.FirstOrDefault(u=>u.Id == id);
-            Category? categoryFromDB2 = _db.categories.Where(u => u.Id == id).FirstOrDefault();
+            //Category? categoryFromDB1 = _db.categories.FirstOrDefault(u=>u.Id == id);
+            //Category? categoryFromDB2 = _db.categories.Where(u => u.Id == id).FirstOrDefault();
 
             if (categoryFromDB == null)
             {
                 return NotFound();
             }
+
             return View(categoryFromDB);
         }
+
         [HttpPost]
         public IActionResult Edit(Category obj)
         {
-            if (obj.Name == obj.DisplayOrder.ToString())
-            {
-                ModelState.AddModelError("Name", "Name can't be same with display order");
-            }
 
             if (ModelState.IsValid)
             {
-                _db.categories.Add(obj);
+                _db.categories.Update(obj);
                 _db.SaveChanges();
                 return RedirectToAction(nameof(Index));
 
             }
             return View();
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Category? categoryFromDB = _db.categories.Find(id);
+            //Category? categoryFromDB1 = _db.categories.FirstOrDefault(u=>u.Id == id);
+            //Category? categoryFromDB2 = _db.categories.Where(u => u.Id == id).FirstOrDefault();
+
+            if (categoryFromDB == null)
+            {
+                return NotFound();
+            }
+
+            return View(categoryFromDB);
+        }
+
+        [HttpPost,ActionName("Delete")]
+        public IActionResult DeletePOST(int? id)
+        {
+            Category? categoryFromDb = _db.categories.Find(id);
+            if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+            _db.categories.Remove(categoryFromDb);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
