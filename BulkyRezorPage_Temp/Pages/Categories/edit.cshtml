@@ -1,0 +1,34 @@
+﻿@page
+@model BulkyRezorPage_Temp.Pages.Categories.editModel
+<p>Edit category</p>
+<form method="post">
+    <div class="border p-4 mt-4">
+        <div asp-validation-summary="All">
+        </div>
+        <div class="row mb-3 p-3">
+            <label class="p-0" asp-for="category.Name"></label>
+            <input type="text" asp-for="category.Name" class="form-control" />
+            <span asp-validation-for="category.Name" class="text-danger"></span>
+        </div>
+        <div class="row mb-3 p-3">
+            <label class="p-0" asp-for="category.DisplayOrder"></label>
+            <input type="text" asp-for="category.DisplayOrder" class="form-control" />
+            <span asp-validation-for="category.DisplayOrder" class="text-danger"></span>
+        </div>
+        <div class="row p-3">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary w-100" style="width:150px">Update</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-page="/Category/index" class="btn btn-outline-secondary w-100" style="">Back to List</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
