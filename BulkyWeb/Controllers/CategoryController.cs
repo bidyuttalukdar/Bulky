@@ -27,11 +27,12 @@ namespace BulkyWeb.Controllers
             {
                 ModelState.AddModelError("Name", "Name can't be same with display order");
             }
-
+ 
             if (ModelState.IsValid) // Will check whether it is valid or not
             {
                 _db.categories.Add(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Post is created successfully";
                 return RedirectToAction(nameof(Index));
                 //return RedirectToAction("Index"); 
 
@@ -60,7 +61,8 @@ namespace BulkyWeb.Controllers
 
         [HttpPost]
         public IActionResult Edit(Category obj)
-        {
+        { 
+            //while updatng make sure tht obj or id should not 0 basically id should come or populated if not it will create a new record to make sure that we should hide id by <input asp-for="Id" hidden> 
 
             if (ModelState.IsValid)
             {
