@@ -28,11 +28,12 @@ namespace BulkyWeb.Controllers
                 ModelState.AddModelError("Name", "Name can't be same with display order");
             }
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) // Will check whether it is valid or not
             {
                 _db.categories.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction(nameof(Index));
+                //return RedirectToAction("Index"); 
 
             }
             return View();
