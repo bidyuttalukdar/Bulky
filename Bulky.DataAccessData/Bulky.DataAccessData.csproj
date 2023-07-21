@@ -19,8 +19,4 @@
 	  <ProjectReference Include="..\Bulky.ModelsData\Bulky.ModelsData.csproj" />
 	  <ProjectReference Include="..\Bulky.UtilityData\Bulky.UtilityData.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Repository\IRepository\" />
-	</ItemGroup>
 </Project>
