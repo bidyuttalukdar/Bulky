@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Bulky.DataAccessData.Data;
 using Bulky.DataAccessData.Repository.IRepository;
 
-namespace BulkyWeb.Controllers
+namespace BulkyWeb.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public CategoryController(IUnitOfWork db) {
+        public CategoryController(IUnitOfWork db)
+        {
             _unitOfWork = db;
         }
         public IActionResult Index()
@@ -24,7 +25,7 @@ namespace BulkyWeb.Controllers
         [HttpPost]
         public IActionResult Create(Category obj)
         {
-            if(obj.Name == obj.DisplayOrder.ToString())
+            if (obj.Name == obj.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("Name", "Name can't be same with display order");
             }
@@ -42,7 +43,7 @@ namespace BulkyWeb.Controllers
 
         public IActionResult Edit(int? id)
         {
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
@@ -90,7 +91,7 @@ namespace BulkyWeb.Controllers
             return View(categoryFromDB);
         }
 
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
             Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);

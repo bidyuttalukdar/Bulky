@@ -1,0 +1,52 @@
+﻿@model List<Product>
+
+<div class="container">
+    <div class="row pt-4">
+        <div class="col-6 text-primary">
+            <h3> Products </h3>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-area="Admin" asp-controller="Products" asp-action="create" class="btn btn-primary"> <i class="bi bi-plus-lg"></i> Create New Products</a>
+        </div>
+    </div>
+    <table class="table table-border table-striped">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Title</td>
+                <td>Description</td>
+                <td>ISBN</td>
+                <td>Author</td>
+                <td>List Price</td>
+                <td>Price</td>
+                <td>Price50</td>
+                <td>Price100</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ob in Model)
+            {
+                <tr>
+                    <td>@ob.Id</td>
+                    <td>@ob.Title</td>
+                    <td>@ob.Description</td>
+                    <td>@ob.ISBN</td>
+                    <td>@ob.Author</td>
+                    <td>@ob.ListPrice</td>
+                    <td>@ob.Price</td>
+                    <td>@ob.Price50</td>
+                    <td>@ob.Price100</td>
+
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-area="Admin" asp-controller="Products" asp-action="edit" asp-route-id="@ob.Id" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
+                            <a asp-area="Admin" asp-controller="Products" asp-action="delete" asp-route-id="@ob.Id" class="btn btn-danger mx-2"> <i class="bi bi-trash"></i> Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
