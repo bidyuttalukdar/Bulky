@@ -1,27 +1,28 @@
 ﻿using Bulky.DataAccessData.Data;
 using Bulky.DataAccessData.Repository.IRepository;
-using Bulky.ModelsData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Bulky.DataAccessData.Repository
 {
-    public class CategoryRepository : Repository<Category>, ICategoryRepository
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _db;
-        public CategoryRepository(ApplicationDbContext db) : base(db)
+        public ICategoryRepository Category { get; private set; }
+
+        public UnitOfWork(ApplicationDbContext db)
         {
             this._db = db;
+            Category = new CategoryRepository(_db); 
         }
 
-
-        public void update(Category obj)
+        public void save()
         {
-            _db.categories.Update(obj);
+            _db.SaveChanges();
+
             //throw new NotImplementedException();
         }
     }
