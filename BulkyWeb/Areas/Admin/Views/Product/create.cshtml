@@ -2,7 +2,7 @@
 
 <p>Create a new product</p>
 <form method="post">
-    <div class="border p-4 my-4">
+    <div class="border p-4 m-4">
         <div asp-validation-summary="All">
         </div>
         <div class="row mb-3 p-3">
@@ -46,6 +46,13 @@
             <span asp-validation-for="Price100" class="text-danger"></span>
         </div>
 
+        <div class="row mb-3 p-3">
+            <label class="p-0" asp-for="CategoryId"></label>
+            <select asp-for="CategoryId" asp-items="ViewBag.CategoryList" class="form-control">
+                <option disabled selected>--select--</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
         <div class="row p-3">
             <div class="col-6">
                 <button type="submit" class="btn btn-primary w-100" style="width:150px">Create</button>
