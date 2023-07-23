@@ -4,11 +4,14 @@ using Bulky.ModelsData.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Web.Helpers;
+
 namespace BulkyWeb.Areas.Admin.Controllers
 {
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         public ProductController(IUnitOfWork db)
         {
             _unitOfWork = db;
@@ -19,7 +22,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             return View(productList);
         }
 
-        public IActionResult Create()
+        public IActionResult Upsert(int? Id)
         {
             ProductVM productVM = new()
             {
@@ -30,15 +33,37 @@ namespace BulkyWeb.Areas.Admin.Controllers
                     Value = u.Id.ToString()
                 })
             };
+            if(Id == null || Id == 0)
+            {
+                return View(productVM);
+            }
+            else
+            {
+                productVM.Product = _unitOfWork.Product.Get(u => u.Id == Id);
+                return View(productVM);
+            }
             //ViewBag.CategoryList = CategoryList;
             //ViewData["CategoryList"] = CategoryList;
-            return View(productVM);
         }
         [HttpPost]
-        public IActionResult Create(ProductVM productVM)
+        public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null)
+                {
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); 
+                    string filePath = Path.Combine(wwwRootPath, @"images\product");
+
+                    using(var fileStream = new FileStream(Path.Combine(filePath,fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    productVM.Product.ImageURL = @"images\product" + fileName; 
+
+                }
+
                 _unitOfWork.Product.Add(productVM.Product);
                 _unitOfWork.save();
                 return RedirectToAction(nameof(Index));
@@ -55,7 +80,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             }
             
         }
-
+        // No need as we combine create and edit
 
         public IActionResult Edit(int? id)
         {
@@ -74,7 +99,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
             return View(productFromDB);
         }
-
+        // No need as we combine create and edit
         [HttpPost]
         public IActionResult Edit(Product obj)
         {

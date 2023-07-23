@@ -6,7 +6,7 @@
             <h3> Products </h3>
         </div>
         <div class="col-6 text-end">
-            <a asp-area="Admin" asp-controller="Products" asp-action="create" class="btn btn-primary"> <i class="bi bi-plus-lg"></i> Create New Products</a>
+            <a asp-area="Admin" asp-controller="Products" asp-action="upsert" class="btn btn-primary"> <i class="bi bi-plus-lg"></i> Create New Products</a>
         </div>
     </div>
     <table class="table table-border table-striped">
@@ -38,10 +38,10 @@
                     <td>@ob.Price</td>
                     <td>@ob.Price50</td>
                     <td>@ob.Price100</td>
-
+                    <td>@ob.CategoryId</td>
                     <td>
                         <div class="w-75 btn-group" role="group">
-                            <a asp-area="Admin" asp-controller="Products" asp-action="edit" asp-route-id="@ob.Id" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
+                            <a asp-area="Admin" asp-controller="Products" asp-action="upsert" asp-route-id="@ob.Id" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
                             <a asp-area="Admin" asp-controller="Products" asp-action="delete" asp-route-id="@ob.Id" class="btn btn-danger mx-2"> <i class="bi bi-trash"></i> Delete</a>
                         </div>
                     </td>

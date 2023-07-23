@@ -1,8 +1,9 @@
 ﻿@model ProductVM
 
-<p>Create a new product</p>
-<form method="post">
+<p>@(Model.Product.Id == 0 ? "Create" : "Update") product</p>
+<form method="post" class="row" enctype="multipart/form-data">
     <div class="border p-4 m-4">
+        <input asp-for="@Model.Product.Id" hidden/>
         <div asp-validation-summary="All">
         </div>
         <div class="row mb-3 p-3">
@@ -48,10 +49,14 @@
 
         <div class="row mb-3 p-3">
             <label class="p-0" asp-for="@Model.Product.CategoryId"></label>
-            <select asp-for="@Model.Product.CategoryId" asp-items="@Model.CategoryList" class="form-control">
+            <select asp-for="@Model.Product.CategoryId" asp-items="@Model.CategoryList" class="form-select">
                 <option disabled selected>--select--</option>
             </select>
             <span asp-validation-for="@Model.Product.CategoryId" class="text-danger"></span>
+        </div>
+        <div class="row mb-3 p-3">
+            <label class="p-0" asp-for="@Model.Product.ImageURL"></label>
+            <input type="file" asp-for="@Model.Product.ImageURL" class="form-control" />
         </div>
         <div class="row p-3">
             <div class="col-6">
