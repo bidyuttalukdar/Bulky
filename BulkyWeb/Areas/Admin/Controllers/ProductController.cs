@@ -1,9 +1,9 @@
 ﻿using Bulky.DataAccessData.Repository.IRepository;
 using Bulky.ModelsData;
+using Bulky.ModelsData.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
-
 namespace BulkyWeb.Areas.Admin.Controllers
 {
     public class ProductController : Controller
@@ -21,25 +21,39 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem({
-                Text = u.Name,
-                Value = u.Id.ToString()
-            });
+            ProductVM productVM = new()
+            {
+                Product = new Product(),
+                CategoryList = (IEnumerable<System.Web.Mvc.SelectListItem>)_unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                })
+            };
             //ViewBag.CategoryList = CategoryList;
-            ViewData["CategoryList"] = CategoryList;
-            return View();
+            //ViewData["CategoryList"] = CategoryList;
+            return View(productVM);
         }
         [HttpPost]
-        public IActionResult Create(Product obj)
+        public IActionResult Create(ProductVM productVM)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(obj);
+                _unitOfWork.Product.Add(productVM.Product);
                 _unitOfWork.save();
                 return RedirectToAction(nameof(Index));
 
             }
-            return View();
+            else
+            {
+                productVM.CategoryList = (IEnumerable<System.Web.Mvc.SelectListItem>)_unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+                return View(productVM);
+            }
+            
         }
 
 
