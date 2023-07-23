@@ -52,9 +52,20 @@ namespace BulkyWeb.Areas.Admin.Controllers
             {
                 if (file != null)
                 {
+                    // to get the wwwRoot folder path
                     string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    // to get file name and extension
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); 
                     string filePath = Path.Combine(wwwRootPath, @"images\product");
+                    // if image exist delete that and add newly
+                    if(productVM.Product.ImageURL != null)
+                    {
+                        string oldImageUrl = Path.Combine(wwwRootPath, productVM.Product.ImageURL.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImageUrl))
+                        {
+                            System.IO.File.Delete(oldImageUrl);
+                        }
+                    }
 
                     using(var fileStream = new FileStream(Path.Combine(filePath,fileName), FileMode.Create))
                     {
@@ -64,7 +75,15 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
                 }
 
-                _unitOfWork.Product.Add(productVM.Product);
+                //check it is a create or update request
+                if(productVM.Product.Id == 0)
+                {
+                    _unitOfWork.Product.Add(productVM.Product);
+                }
+                else
+                {
+                    _unitOfWork.Product.Update(productVM.Product);
+                }
                 _unitOfWork.save();
                 return RedirectToAction(nameof(Index));
 
