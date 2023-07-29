@@ -18,7 +18,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            List<Product> productList = _unitOfWork.Product.GetAll().ToList();
+            List<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
             return View(productList);
         }
 
@@ -39,7 +39,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             }
             else
             {
-                productVM.Product = _unitOfWork.Product.Get(u => u.Id == Id);
+                productVM.Product = _unitOfWork.Product.Get(u => u.Id == Id,includeProperties: "Category");
                 return View(productVM);
             }
             //ViewBag.CategoryList = CategoryList;
@@ -58,7 +58,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); 
                     string filePath = Path.Combine(wwwRootPath, @"images\product");
                     // if image exist delete that and add newly
-                    if(!string.IsNullOrEmpty(productVM.Product.ImageURL))
+                    if(!string.IsNullOrEmpty(productVM.Product.ImageURL) )
                     {
                         string oldImageUrl = Path.Combine(wwwRootPath, productVM.Product.ImageURL.TrimStart('\\'));
                         if (System.IO.File.Exists(oldImageUrl))

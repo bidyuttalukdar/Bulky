@@ -38,7 +38,7 @@
                     <td>@ob.Price</td>
                     <td>@ob.Price50</td>
                     <td>@ob.Price100</td>
-                    <td>@ob.CategoryId</td>
+                    <td>@ob.Category.Name</td>
                     <td>
                         <div class="w-75 btn-group" role="group">
                             <a asp-area="Admin" asp-controller="Products" asp-action="upsert" asp-route-id="@ob.Id" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
